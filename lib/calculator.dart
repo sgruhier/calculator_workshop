@@ -20,72 +20,31 @@ class _CalculatorState extends State<Calculator> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     const margin = 4;
-    final keySize = min(size.width, size.height) / 4 - 4 * margin;
-    return Column(
-      children: [
-        Expanded(
-          child: Align(
-            alignment: Alignment.bottomRight,
-            child: FittedBox(
-              child: Text(
-                result,
-                style: const TextStyle(fontSize: 48),
-              ),
+    return OrientationBuilder(builder: (context, orientation) {
+      final bool isLandscape = orientation == Orientation.landscape;
+      if (isLandscape) {
+        final keySize = min(size.width, size.height) / 5 - 4 * margin;
+        return Row(
+          children: [
+            Expanded(child: keyPad(keySize)),
+            const VerticalDivider(
+              width: 16,
+              thickness: 1,
             ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Text(
-            operation,
-            style: TextStyle(
-              fontSize: 24,
-              color: error ? Colors.red : Colors.grey,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            CalculatorKey(value: "AC", onTap: clear, height: keySize),
-            CalculatorKey(value: "(", onTap: addKey, height: keySize),
-            CalculatorKey(value: ")", onTap: addKey, height: keySize),
-            CalculatorKey(value: "/", onTap: addKey, height: keySize),
+            Expanded(child: display()),
           ],
-        ),
-        Row(
+        );
+      } else {
+        final keySize = min(size.width, size.height) / 4 - 4 * margin;
+        return Column(
           children: [
-            CalculatorKey(value: "7", onTap: addKey, height: keySize),
-            CalculatorKey(value: "8", onTap: addKey, height: keySize),
-            CalculatorKey(value: "9", onTap: addKey, height: keySize),
-            CalculatorKey(value: "*", onTap: addKey, height: keySize),
+            Expanded(child: display()),
+            const SizedBox(height: 8),
+            keyPad(keySize),
           ],
-        ),
-        Row(
-          children: [
-            CalculatorKey(value: "4", onTap: addKey, height: keySize),
-            CalculatorKey(value: "5", onTap: addKey, height: keySize),
-            CalculatorKey(value: "6", onTap: addKey, height: keySize),
-            CalculatorKey(value: "-", onTap: addKey, height: keySize),
-          ],
-        ),
-        Row(
-          children: [
-            CalculatorKey(value: "1", onTap: addKey, height: keySize),
-            CalculatorKey(value: "2", onTap: addKey, height: keySize),
-            CalculatorKey(value: "3", onTap: addKey, height: keySize),
-            CalculatorKey(value: "+", onTap: addKey, height: keySize),
-          ],
-        ),
-        Row(
-          children: [
-            CalculatorKey(value: "0", onTap: addKey, height: keySize, flex: 2),
-            CalculatorKey(value: ".", onTap: addKey, height: keySize),
-            CalculatorKey(value: "=", onTap: compute, height: keySize),
-          ],
-        ),
-      ],
-    );
+        );
+      }
+    });
   }
 
   void addKey(String value) {
@@ -131,5 +90,79 @@ class _CalculatorState extends State<Calculator> {
       error = true;
     }
     setState(() {});
+  }
+
+  Widget display() {
+    return Column(
+      children: [
+        Expanded(
+          child: Align(
+            alignment: Alignment.bottomRight,
+            child: FittedBox(
+              child: Text(
+                result,
+                style: const TextStyle(fontSize: 48),
+              ),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Text(
+            operation,
+            style: TextStyle(
+              fontSize: 24,
+              color: error ? Colors.red : Colors.grey,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget keyPad(double keySize) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            CalculatorKey(value: "AC", onTap: clear, height: keySize),
+            CalculatorKey(value: "(", onTap: addKey, height: keySize),
+            CalculatorKey(value: ")", onTap: addKey, height: keySize),
+            CalculatorKey(value: "/", onTap: addKey, height: keySize),
+          ],
+        ),
+        Row(
+          children: [
+            CalculatorKey(value: "7", onTap: addKey, height: keySize),
+            CalculatorKey(value: "8", onTap: addKey, height: keySize),
+            CalculatorKey(value: "9", onTap: addKey, height: keySize),
+            CalculatorKey(value: "*", onTap: addKey, height: keySize),
+          ],
+        ),
+        Row(
+          children: [
+            CalculatorKey(value: "4", onTap: addKey, height: keySize),
+            CalculatorKey(value: "5", onTap: addKey, height: keySize),
+            CalculatorKey(value: "6", onTap: addKey, height: keySize),
+            CalculatorKey(value: "-", onTap: addKey, height: keySize),
+          ],
+        ),
+        Row(
+          children: [
+            CalculatorKey(value: "1", onTap: addKey, height: keySize),
+            CalculatorKey(value: "2", onTap: addKey, height: keySize),
+            CalculatorKey(value: "3", onTap: addKey, height: keySize),
+            CalculatorKey(value: "+", onTap: addKey, height: keySize),
+          ],
+        ),
+        Row(
+          children: [
+            CalculatorKey(value: "0", onTap: addKey, height: keySize, flex: 2),
+            CalculatorKey(value: ".", onTap: addKey, height: keySize),
+            CalculatorKey(value: "=", onTap: compute, height: keySize),
+          ],
+        ),
+      ],
+    );
   }
 }
