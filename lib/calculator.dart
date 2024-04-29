@@ -25,15 +25,15 @@ class _CalculatorState extends State<Calculator> {
     return OrientationBuilder(builder: (context, orientation) {
       final bool isLandscape = orientation == Orientation.landscape;
       if (isLandscape) {
-        final keySize = min(size.width, size.height) / 5 - 4 * margin;
+        final keySize = min(size.width, size.height) / 5 - 5 * margin;
         return Row(
           children: [
-            Expanded(child: keyPad(keySize)),
+            Expanded(child: display()),
             const VerticalDivider(
               width: 16,
               thickness: 1,
             ),
-            Expanded(child: display()),
+            Expanded(child: keyPad(keySize)),
           ],
         );
       } else {
