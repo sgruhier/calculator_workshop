@@ -68,8 +68,8 @@ void main() {
       await tester.tap(find.widgetWithText(CalculatorKey, '='));
       await tester.pump();
 
-      // Verify result is '9'
-      expect(find.text('27'), findsOneWidget);
+      // Verify result is '27'
+      expect(find.text('27'), findsExactly(2));
 
       // Verify operation is cleared after computing
       expect(find.text(''), findsOneWidget);

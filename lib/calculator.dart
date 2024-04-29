@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:calculator/models/result.dart';
 import 'package:calculator/widgets/calculator_key.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
@@ -15,6 +16,7 @@ class _CalculatorState extends State<Calculator> {
   String operation = "";
   String result = "0";
   bool error = false;
+  List<Result> results = [];
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +86,7 @@ class _CalculatorState extends State<Calculator> {
         // If the result is not an integer, use the double value
         result = eval.toString();
       }
+      results.insert(0, Result(operation, result));
       operation = "";
     } catch (e) {
       operation = "Error in expression";
@@ -96,13 +99,39 @@ class _CalculatorState extends State<Calculator> {
     return Column(
       children: [
         Expanded(
-          child: Align(
-            alignment: Alignment.bottomRight,
-            child: FittedBox(
-              child: Text(
-                result,
-                style: const TextStyle(fontSize: 48),
-              ),
+          child: ListView.separated(
+            reverse: true,
+            itemCount: results.length,
+            separatorBuilder: (BuildContext context, int index) {
+              return const Divider(height: 5, thickness: 0.5, color: Colors.grey);
+            },
+            itemBuilder: (BuildContext context, int index) {
+              return Column(
+                children: [
+                  SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        results[index].operation,
+                        textAlign: TextAlign.end,
+                      )),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      results[index].result,
+                      textAlign: TextAlign.end,
+                    ),
+                  )
+                ],
+              );
+            },
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: FittedBox(
+            child: Text(
+              result,
+              style: const TextStyle(fontSize: 48),
             ),
           ),
         ),

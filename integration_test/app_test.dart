@@ -28,7 +28,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the result
-      expect(find.text('48'), findsOneWidget);
+      expect(find.text('48'), findsExactly(2));
     });
   });
 }
