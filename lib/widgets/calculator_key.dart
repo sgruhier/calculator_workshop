@@ -34,7 +34,11 @@ class CalculatorKey extends StatelessWidget {
               border: Border.all(color: borderColor ?? Colors.transparent, width: borderColor != null ? 1 : 0),
             ),
             child: Center(
-              child: Text(value, style: TextStyle(color: color ?? Colors.white, fontSize: 24)),
+              child: Text(value,
+                  style: TextStyle(
+                    color: color ?? Colors.white,
+                    fontSize: height / 2,
+                  )),
             )),
       ),
     );
