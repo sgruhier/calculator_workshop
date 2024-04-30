@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:calculator/theme/custom_key_theme.dart';
 import 'package:calculator/widgets/calculator_key.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
@@ -20,6 +21,7 @@ class _CalculatorState extends State<Calculator> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     const margin = 4;
+
     return OrientationBuilder(builder: (context, orientation) {
       final bool isLandscape = orientation == Orientation.landscape;
       if (isLandscape) {
@@ -121,48 +123,83 @@ class _CalculatorState extends State<Calculator> {
   }
 
   Widget keyPad(double keySize) {
+    final customTheme = context.customKeyTheme;
     return Column(
       children: [
         Row(
           children: [
-            CalculatorKey(value: "AC", onTap: clear, height: keySize),
-            CalculatorKey(value: "(", onTap: addKey, height: keySize),
-            CalculatorKey(value: ")", onTap: addKey, height: keySize),
-            CalculatorKey(value: "/", onTap: addKey, height: keySize),
+            CalculatorKey(
+                value: "AC",
+                onTap: clear,
+                height: keySize,
+                backgroundColor: customTheme.acKeyBgColor,
+                color: customTheme.acKeyColor),
+            operatorKey(value: "(", keySize: keySize),
+            operatorKey(value: ")", keySize: keySize),
+            operatorKey(value: "/", keySize: keySize),
           ],
         ),
         Row(
           children: [
-            CalculatorKey(value: "7", onTap: addKey, height: keySize),
-            CalculatorKey(value: "8", onTap: addKey, height: keySize),
-            CalculatorKey(value: "9", onTap: addKey, height: keySize),
-            CalculatorKey(value: "*", onTap: addKey, height: keySize),
+            numberKey(value: "7", keySize: keySize),
+            numberKey(value: "8", keySize: keySize),
+            numberKey(value: "9", keySize: keySize),
+            operatorKey(value: "*", keySize: keySize),
           ],
         ),
         Row(
           children: [
-            CalculatorKey(value: "4", onTap: addKey, height: keySize),
-            CalculatorKey(value: "5", onTap: addKey, height: keySize),
-            CalculatorKey(value: "6", onTap: addKey, height: keySize),
-            CalculatorKey(value: "-", onTap: addKey, height: keySize),
+            numberKey(value: "4", keySize: keySize),
+            numberKey(value: "5", keySize: keySize),
+            numberKey(value: "6", keySize: keySize),
+            operatorKey(value: "-", keySize: keySize),
           ],
         ),
         Row(
           children: [
-            CalculatorKey(value: "1", onTap: addKey, height: keySize),
-            CalculatorKey(value: "2", onTap: addKey, height: keySize),
-            CalculatorKey(value: "3", onTap: addKey, height: keySize),
-            CalculatorKey(value: "+", onTap: addKey, height: keySize),
+            numberKey(value: "1", keySize: keySize),
+            numberKey(value: "2", keySize: keySize),
+            numberKey(value: "3", keySize: keySize),
+            operatorKey(value: "+", keySize: keySize),
           ],
         ),
         Row(
           children: [
-            CalculatorKey(value: "0", onTap: addKey, height: keySize, flex: 2),
-            CalculatorKey(value: ".", onTap: addKey, height: keySize),
-            CalculatorKey(value: "=", onTap: compute, height: keySize),
+            numberKey(value: "0", keySize: keySize, flex: 2),
+            numberKey(value: ".", keySize: keySize),
+            CalculatorKey(
+                value: "=",
+                onTap: compute,
+                height: keySize,
+                backgroundColor: customTheme.equalKeyBgColor,
+                color: customTheme.equalKeyColor),
           ],
         ),
       ],
+    );
+  }
+
+  Widget numberKey({required String value, required double keySize, int flex = 1}) {
+    final customTheme = context.customKeyTheme;
+    return CalculatorKey(
+      value: value,
+      onTap: addKey,
+      height: keySize,
+      backgroundColor: customTheme.numberKeyBgColor,
+      color: customTheme.numberKeyColor,
+      flex: flex,
+    );
+  }
+
+  Widget operatorKey({required String value, required double keySize}) {
+    final customTheme = context.customKeyTheme;
+    return CalculatorKey(
+      value: value,
+      onTap: addKey,
+      height: keySize,
+      backgroundColor: customTheme.operatorKeyBgColor,
+      color: customTheme.operatorKeyColor,
+      borderColor: customTheme.acKeyBgColor,
     );
   }
 }
