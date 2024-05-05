@@ -37,7 +37,7 @@ class CalculatorKey extends StatelessWidget {
               child: Text(value,
                   style: TextStyle(
                     color: color ?? Colors.white,
-                    fontSize: height / 2,
+                    fontSize: height / 3,
                   )),
             )),
       ),

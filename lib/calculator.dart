@@ -101,30 +101,48 @@ class _CalculatorState extends State<Calculator> {
     return Column(
       children: [
         Expanded(
-          child: ListView.separated(
+          child: ListView.builder(
             reverse: true,
             itemCount: results.length,
-            separatorBuilder: (BuildContext context, int index) {
-              return const Divider(height: 5, thickness: 0.5, color: Colors.grey);
-            },
             itemBuilder: (BuildContext context, int index) {
-              return Column(
-                children: [
-                  SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        results[index].operation,
-                        textAlign: TextAlign.end,
-                      )),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Text(
+              if (results[index].operation.length + results[index].result.length < 20) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      results[index].operation,
+                      textAlign: TextAlign.end,
+                      style: TextStyle(fontSize: 24, color: Theme.of(context).colorScheme.primary),
+                    ),
+                    const Text(' = '),
+                    Text(
                       results[index].result,
                       textAlign: TextAlign.end,
+                      style: TextStyle(fontSize: 24, color: Theme.of(context).colorScheme.secondary),
                     ),
-                  )
-                ],
-              );
+                  ],
+                );
+              } else {
+                return Column(
+                  children: [
+                    SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          results[index].operation,
+                          textAlign: TextAlign.end,
+                          style: TextStyle(fontSize: 24, color: Theme.of(context).colorScheme.primary),
+                        )),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        results[index].result,
+                        textAlign: TextAlign.end,
+                        style: TextStyle(fontSize: 24, color: Theme.of(context).colorScheme.secondary),
+                      ),
+                    )
+                  ],
+                );
+              }
             },
           ),
         ),

@@ -17,17 +17,25 @@ class MyApp extends StatelessWidget {
       title: 'Calculator',
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: lightBgColor,
+        colorScheme: ThemeData.light().colorScheme.copyWith(
+              primary: Colors.black,
+              secondary: Colors.black.withOpacity(0.3),
+            ),
         extensions: <ThemeExtension<dynamic>>[
           lightCustomKeyTheme,
         ],
       ),
       darkTheme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: darkBgColor,
+        colorScheme: ThemeData.dark().colorScheme.copyWith(
+              primary: Colors.white,
+              secondary: Colors.white.withOpacity(0.3),
+            ),
         extensions: <ThemeExtension<dynamic>>[
           darkCustomKeyTheme,
         ],
       ),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       home: const CalculatorLayout(),
     );
   }
