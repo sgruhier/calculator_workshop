@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class CalculatorKey extends StatelessWidget {
+class CalculatorKey extends StatefulWidget {
   const CalculatorKey({
     required this.value,
     required this.height,
@@ -11,6 +12,7 @@ class CalculatorKey extends StatelessWidget {
     this.flex = 1,
     super.key,
   });
+
   final String value;
   final int flex;
   final double height;
@@ -20,26 +22,61 @@ class CalculatorKey extends StatelessWidget {
   final void Function(String) onTap;
 
   @override
+  State<CalculatorKey> createState() => _CalculatorKeyState();
+}
+
+class _CalculatorKeyState extends State<CalculatorKey> {
+  Color? currentBackgroundColor;
+
+  @override
+  void initState() {
+    super.initState();
+    currentBackgroundColor = widget.backgroundColor ?? Colors.black;
+  }
+
+  void animateBackgroundColor() {
+    setState(() {
+      // Temporary grey color
+      currentBackgroundColor = Colors.grey;
+      HapticFeedback.lightImpact();
+    });
+
+    Future.delayed(const Duration(milliseconds: 100), () {
+      setState(() {
+        // Reset to original color
+        currentBackgroundColor = widget.backgroundColor ?? Colors.black;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: flex,
+      flex: widget.flex,
       child: GestureDetector(
-        onTap: () => onTap(value),
-        child: Container(
-            height: height,
-            margin: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(100)),
-              color: backgroundColor ?? Colors.black,
-              border: Border.all(color: borderColor ?? Colors.transparent, width: borderColor != null ? 1 : 0),
-            ),
-            child: Center(
-              child: Text(value,
-                  style: TextStyle(
-                    color: color ?? Colors.white,
-                    fontSize: height / 2,
-                  )),
-            )),
+        onTap: () {
+          widget.onTap(widget.value);
+          animateBackgroundColor();
+        },
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 100),
+          curve: Curves.easeInOut,
+          height: widget.height,
+          margin: const EdgeInsets.all(4),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(100)),
+            color: currentBackgroundColor,
+            border:
+                Border.all(color: widget.borderColor ?? Colors.transparent, width: widget.borderColor != null ? 1 : 0),
+          ),
+          child: Center(
+            child: Text(widget.value,
+                style: TextStyle(
+                  color: widget.color ?? Colors.white,
+                  fontSize: widget.height / 2,
+                )),
+          ),
+        ),
       ),
     );
   }
