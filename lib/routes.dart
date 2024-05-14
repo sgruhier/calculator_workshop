@@ -3,6 +3,22 @@ import 'package:calculator/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+class FadeTransitionPage extends CustomTransitionPage<void> {
+  FadeTransitionPage({
+    required super.child,
+  }) : super(
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+          transitionDuration: const Duration(milliseconds: 2000),
+        );
+}
+
 final GoRouter router = GoRouter(
   routes: <RouteBase>[
     GoRoute(
@@ -15,9 +31,9 @@ final GoRouter router = GoRouter(
     GoRoute(
       name: 'settings',
       path: '/settings',
-      builder: (BuildContext context, GoRouterState state) {
-        return const Settings();
-      },
+      pageBuilder: (context, state) => FadeTransitionPage(
+        child: const Settings(),
+      ),
     ),
   ],
 );
