@@ -1,16 +1,16 @@
 # calculator
 
-A new Flutter project.
+Algosup first Workshop
 
-## Getting Started
+You have 5 branches corresponding to the 5 steps of the workshop.
 
-This project is a starting point for a Flutter application.
+  01_initial_version: the initial version of the project, simple layout. everything  is connected, some unit tests
 
-A few resources to get you started if this is your first Flutter project:
+  02_landscape: the landscape version of the project
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+* 03_1_animation: extra step to add a visual effect when you tap on a key. With also haptick.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  03_theme: Add light/dark theme
+
+  04_history: Add history of operations
+
