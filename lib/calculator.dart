@@ -4,6 +4,7 @@ import 'package:calculator/models/result.dart';
 import 'package:calculator/theme/custom_key_theme.dart';
 import 'package:calculator/widgets/calculator_key.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 class Calculator extends StatefulWidget {
@@ -23,31 +24,45 @@ class _CalculatorState extends State<Calculator> {
     final size = MediaQuery.sizeOf(context);
     const margin = 4;
 
-    return OrientationBuilder(builder: (context, orientation) {
-      final bool isLandscape = orientation == Orientation.landscape;
-      if (isLandscape) {
-        final keySize = min(size.width, size.height) / 5 - 5 * margin;
-        return Row(
-          children: [
-            Expanded(child: display()),
-            const VerticalDivider(
-              width: 16,
-              thickness: 1,
-            ),
-            Expanded(child: keyPad(keySize)),
-          ],
-        );
-      } else {
-        final keySize = min(size.width, size.height) / 4 - 4 * margin;
-        return Column(
-          children: [
-            Expanded(child: display()),
-            const SizedBox(height: 8),
-            keyPad(keySize),
-          ],
-        );
-      }
-    });
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              context.pushNamed('settings');
+            },
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: OrientationBuilder(builder: (context, orientation) {
+          final bool isLandscape = orientation == Orientation.landscape;
+          if (isLandscape) {
+            final keySize = min(size.width, size.height) / 5 - 5 * margin;
+            return Row(
+              children: [
+                Expanded(child: display()),
+                const VerticalDivider(
+                  width: 16,
+                  thickness: 1,
+                ),
+                Expanded(child: keyPad(keySize)),
+              ],
+            );
+          } else {
+            final keySize = min(size.width, size.height) / 4 - 4 * margin;
+            return Column(
+              children: [
+                Expanded(child: display()),
+                const SizedBox(height: 8),
+                keyPad(keySize),
+              ],
+            );
+          }
+        }),
+      ),
+    );
   }
 
   void addKey(String value) {

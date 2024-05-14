@@ -1,7 +1,8 @@
 import 'package:calculator/calculator.dart';
-import 'package:calculator/settings.dart';
+import 'package:calculator/routes.dart';
 import 'package:calculator/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    GoRoute route;
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Calculator',
       theme: ThemeData.light().copyWith(
@@ -45,10 +47,7 @@ class MyApp extends StatelessWidget {
         ],
       ),
       themeMode: ThemeMode.light,
-      routes: {
-        '/': (context) => const CalculatorLayout(),
-        '/settings': (context) => const Settings(),
-      },
+      routerConfig: router,
     );
   }
 }
