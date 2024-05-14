@@ -45,7 +45,10 @@ class MyApp extends StatelessWidget {
         ],
       ),
       themeMode: ThemeMode.light,
-      home: const CalculatorLayout(),
+      routes: {
+        '/': (context) => const CalculatorLayout(),
+        '/settings': (context) => const Settings(),
+      },
     );
   }
 }
@@ -61,12 +64,7 @@ class CalculatorLayout extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Settings(),
-                ),
-              );
+              Navigator.of(context).pushNamed('/settings');
             },
           ),
         ],
