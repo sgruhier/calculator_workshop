@@ -1,4 +1,6 @@
+import 'package:calculator/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -9,8 +11,14 @@ class Settings extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Settings'),
       ),
-      body: const Center(
-        child: Text(''),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            authService.logout();
+            context.goNamed("home");
+          },
+          child: const Text('Logout'),
+        ),
       ),
     );
   }
