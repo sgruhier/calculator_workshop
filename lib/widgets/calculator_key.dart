@@ -24,15 +24,19 @@ class CalculatorKey extends StatelessWidget {
             height: height,
             margin: const EdgeInsets.all(4),
             decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(100)),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(100),
+              ),
               color: backgroundColor,
             ),
             child: Center(
-              child: Text(value,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: height / 2,
-                  )),
+              child: Text(
+                value,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: height / 2,
+                ),
+              ),
             )),
       ),
     );
