@@ -15,7 +15,6 @@ class Calculator extends StatefulWidget {
 
 class _CalculatorState extends State<Calculator> {
   String operation = "";
-  String result = "0";
   bool error = false;
   List<Result> results = [];
 
@@ -80,7 +79,7 @@ class _CalculatorState extends State<Calculator> {
       error = false;
 
       double eval = exp.evaluate(EvaluationType.REAL, cm);
-
+      String result;
       if (eval == eval.toInt()) {
         // If the result is an integer, use the integer value
         result = eval.toInt().toString();
@@ -148,20 +147,11 @@ class _CalculatorState extends State<Calculator> {
         ),
         Align(
           alignment: Alignment.bottomRight,
-          child: FittedBox(
-            child: Text(
-              result,
-              style: const TextStyle(fontSize: 48),
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomRight,
           child: Text(
-            operation,
+            operation.isEmpty ? "0" : operation,
             style: TextStyle(
-              fontSize: 24,
-              color: error ? Colors.red : Colors.grey,
+              fontSize: 48,
+              color: error ? Colors.red : null,
             ),
           ),
         ),
