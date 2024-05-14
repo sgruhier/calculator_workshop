@@ -1,4 +1,5 @@
 import 'package:calculator/calculator.dart';
+import 'package:calculator/settings.dart';
 import 'package:calculator/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,10 @@ class MyApp extends StatelessWidget {
       title: 'Calculator',
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: lightBgColor,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: lightBgColor,
+          elevation: 0,
+        ),
         colorScheme: ThemeData.light().colorScheme.copyWith(
               primary: Colors.black,
               secondary: Colors.black.withOpacity(0.3),
@@ -27,6 +32,10 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: darkBgColor,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: darkBgColor,
+          elevation: 0,
+        ),
         colorScheme: ThemeData.dark().colorScheme.copyWith(
               primary: Colors.white,
               secondary: Colors.white.withOpacity(0.3),
@@ -46,8 +55,23 @@ class CalculatorLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Settings(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      body: const SafeArea(
         child: Center(
           child: Padding(
             padding: EdgeInsets.all(8.0),
