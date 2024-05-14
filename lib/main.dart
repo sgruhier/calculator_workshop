@@ -28,22 +28,13 @@ class MyApp extends StatelessWidget {
         ],
       ),
       themeMode: ThemeMode.light,
-      home: const CalculatorLayout(),
-    );
-  }
-}
-
-class CalculatorLayout extends StatelessWidget {
-  const CalculatorLayout({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Calculator(),
+      home: const Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Calculator(),
+            ),
           ),
         ),
       ),

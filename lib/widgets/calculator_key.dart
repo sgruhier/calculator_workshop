@@ -26,20 +26,23 @@ class CalculatorKey extends StatelessWidget {
       child: GestureDetector(
         onTap: () => onTap(value),
         child: Container(
-            height: height,
-            margin: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(100)),
-              color: backgroundColor ?? Colors.black,
-              border: Border.all(color: borderColor ?? Colors.transparent, width: borderColor != null ? 1 : 0),
+          height: height,
+          margin: const EdgeInsets.all(4),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(100)),
+            color: backgroundColor ?? Colors.black,
+            border: Border.all(color: borderColor ?? Colors.transparent, width: borderColor != null ? 1 : 0),
+          ),
+          child: Center(
+            child: Text(
+              value,
+              style: TextStyle(
+                color: color ?? Colors.white,
+                fontSize: height / 2,
+              ),
             ),
-            child: Center(
-              child: Text(value,
-                  style: TextStyle(
-                    color: color ?? Colors.white,
-                    fontSize: height / 2,
-                  )),
-            )),
+          ),
+        ),
       ),
     );
   }

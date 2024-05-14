@@ -14,6 +14,7 @@ class Calculator extends StatefulWidget {
 
 class _CalculatorState extends State<Calculator> {
   String operation = "";
+  String currentNumber = "";
   String result = "0";
   bool error = false;
 
@@ -54,6 +55,17 @@ class _CalculatorState extends State<Calculator> {
       clear("");
     }
     setState(() {
+      // Check if value is . and currentNumber already has a .
+      if (value == "." && currentNumber.contains(".")) {
+        return;
+      }
+      // Check if the value is a number using regex
+      if (RegExp(r'[0-9\.]').hasMatch(value)) {
+        currentNumber += value;
+      } else {
+        currentNumber = "";
+      }
+
       operation += value;
     });
   }
@@ -62,6 +74,7 @@ class _CalculatorState extends State<Calculator> {
     setState(() {
       error = false;
       operation = "";
+      currentNumber = "";
     });
   }
 
