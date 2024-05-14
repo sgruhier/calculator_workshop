@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           darkCustomKeyTheme,
         ],
       ),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       home: const CalculatorLayout(),
     );
   }
