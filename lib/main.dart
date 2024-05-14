@@ -18,22 +18,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 20, 0, 43)),
         useMaterial3: true,
       ),
-      home: const CalculatorLayout(),
-    );
-  }
-}
-
-class CalculatorLayout extends StatelessWidget {
-  const CalculatorLayout({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Calculator(),
+      home: const Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Calculator(),
+            ),
           ),
         ),
       ),
