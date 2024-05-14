@@ -126,8 +126,8 @@ class _CalculatorState extends State<Calculator> {
           child: Text(
             operation,
             style: TextStyle(
-              fontSize: 24,
-              color: error ? Colors.red : Colors.grey,
+              fontSize: 48,
+              color: error ? Colors.red : null,
             ),
           ),
         ),
