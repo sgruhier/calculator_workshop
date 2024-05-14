@@ -13,6 +13,7 @@ class Calculator extends StatefulWidget {
 
 class _CalculatorState extends State<Calculator> {
   String operation = "";
+  String currentNumber = "";
   String result = "0";
   bool error = false;
 
@@ -20,7 +21,91 @@ class _CalculatorState extends State<Calculator> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     const margin = 4;
-    final keySize = min(size.width, size.height) / 4 - 4 * margin;
+    return OrientationBuilder(builder: (context, orientation) {
+      final bool isLandscape = orientation == Orientation.landscape;
+      if (isLandscape) {
+        final keySize = min(size.width, size.height) / 5 - 4 * margin;
+        return Row(
+          children: [
+            Expanded(child: keyPad(keySize)),
+            const VerticalDivider(
+              width: 16,
+              thickness: 1,
+            ),
+            Expanded(child: display()),
+          ],
+        );
+      } else {
+        final keySize = min(size.width, size.height) / 4 - 4 * margin;
+        return Column(
+          children: [
+            Expanded(child: display()),
+            const SizedBox(height: 8),
+            keyPad(keySize),
+          ],
+        );
+      }
+    });
+  }
+
+  void addKey(String value) {
+    if (error) {
+      clear("");
+    }
+    setState(() {
+      // Check if value is . and currentNumber already has a .
+      if (value == "." && currentNumber.contains(".")) {
+        return;
+      }
+      // Check if the value is a number using regex
+      if (RegExp(r'[0-9\.]').hasMatch(value)) {
+        currentNumber += value;
+      } else {
+        currentNumber = "";
+      }
+
+      operation += value;
+    });
+  }
+
+  void clear(String value) {
+    setState(() {
+      error = false;
+      operation = "";
+      currentNumber = "";
+    });
+  }
+
+  void compute(String value) {
+    try {
+      // Parse the expression string
+      Parser p = Parser();
+      Expression exp = p.parse(operation);
+
+      // Create a context model (can be empty for simple expressions without variables)
+      ContextModel cm = ContextModel();
+
+      // Evaluate the expression
+      error = false;
+
+      double eval = exp.evaluate(EvaluationType.REAL, cm);
+
+      if (eval == eval.toInt()) {
+        // If the result is an integer, use the integer value
+        result = eval.toInt().toString();
+      } else {
+        // If the result is not an integer, use the double value
+        result = eval.toString();
+      }
+      operation = "";
+    } catch (e) {
+      operation = "Error in expression";
+      error = true;
+    }
+    setState(() {});
+  }
+
+  Widget display() {
     return Column(
       children: [
         Expanded(
@@ -44,7 +129,13 @@ class _CalculatorState extends State<Calculator> {
             ),
           ),
         ),
-        const SizedBox(height: 8),
+      ],
+    );
+  }
+
+  Widget keyPad(double keySize) {
+    return Column(
+      children: [
         Row(
           children: [
             CalculatorKey(value: "AC", onTap: clear, height: keySize),
@@ -86,50 +177,5 @@ class _CalculatorState extends State<Calculator> {
         ),
       ],
     );
-  }
-
-  void addKey(String value) {
-    if (error) {
-      clear("");
-    }
-    setState(() {
-      operation += value;
-    });
-  }
-
-  void clear(String value) {
-    setState(() {
-      error = false;
-      operation = "";
-    });
-  }
-
-  void compute(String value) {
-    try {
-      // Parse the expression string
-      Parser p = Parser();
-      Expression exp = p.parse(operation);
-
-      // Create a context model (can be empty for simple expressions without variables)
-      ContextModel cm = ContextModel();
-
-      // Evaluate the expression
-      error = false;
-
-      double eval = exp.evaluate(EvaluationType.REAL, cm);
-
-      if (eval == eval.toInt()) {
-        // If the result is an integer, use the integer value
-        result = eval.toInt().toString();
-      } else {
-        // If the result is not an integer, use the double value
-        result = eval.toString();
-      }
-      operation = "";
-    } catch (e) {
-      operation = "Error in expression";
-      error = true;
-    }
-    setState(() {});
   }
 }
