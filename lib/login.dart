@@ -12,9 +12,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
-  void _login() {
-    authService.login(_passwordController.text);
-    if (authService.isAuthenticated) {
+  Future<void> _login() async {
+    var isAuthenticated = await authService.login(_passwordController.text);
+    if (isAuthenticated) {
       context.replaceNamed('settings');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

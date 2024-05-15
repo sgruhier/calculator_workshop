@@ -20,8 +20,9 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         return const Settings();
       },
-      redirect: (context, state) {
-        if (!authService.isAuthenticated) {
+      redirect: (context, state) async {
+        var isAuthenticated = await authService.isAuthenticated;
+        if (isAuthenticated == false) {
           return '/login';
         }
         return null;
