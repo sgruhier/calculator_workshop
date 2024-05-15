@@ -12,6 +12,14 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
+  bool _isPasswordVisible = false;
+
+  void toggleVisibily() {
+    setState(() {
+      _isPasswordVisible = !_isPasswordVisible;
+    });
+  }
+
   void _login() {
     if (authService.login(_passwordController.text)) {
       context.replaceNamed('settings');
@@ -19,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Incorrect password')),
       );
+      // Future.delayed(const Duration(seconds: 1),  () => context.pop());
     }
   }
 
@@ -31,10 +40,20 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(labelText: 'Password'),
-              obscureText: true,
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _passwordController,
+                    decoration: const InputDecoration(labelText: 'Password'),
+                    obscureText: !_isPasswordVisible,
+                  ),
+                ),
+                IconButton(
+                  onPressed: toggleVisibily,
+                  icon: _isPasswordVisible ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             ElevatedButton(
