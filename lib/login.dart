@@ -13,8 +13,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _login() {
-    authService.login(_passwordController.text);
-    if (authService.isAuthenticated) {
+    if (authService.login(_passwordController.text)) {
       context.replaceNamed('settings');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

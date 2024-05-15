@@ -1,8 +1,9 @@
 class AuthService {
   bool isAuthenticated = false;
 
-  void login(String code) {
+  bool login(String code) {
     isAuthenticated = (code == 'azeaze');
+    return isAuthenticated;
   }
 
   void logout() {
